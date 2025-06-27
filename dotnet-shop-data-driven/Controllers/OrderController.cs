@@ -10,12 +10,12 @@ namespace Shop.Controllers
     {
         [HttpGet]
         [Route("")]
-        [Authorize(Roles = "employee")]
+        [Authorize(Roles = "employee,manager")]
         [ResponseCache(Duration = 30, VaryByHeader = "User-Agent", Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<List<Order>>> Get([FromServices] DataContext db)
         {
-        var orders = await db.Orders.AsNoTracking().ToListAsync();
-        return Ok(orders);
+            var orders = await db.Orders.AsNoTracking().ToListAsync();
+            return Ok(orders);
         }
 
         [HttpGet]
@@ -23,9 +23,9 @@ namespace Shop.Controllers
         [Authorize(Roles = "employee")]
         public async Task<ActionResult<Order>> GetById(int id, [FromServices] DataContext db)
         {
-        var order = await db.Orders.AsNoTracking().FirstOrDefaultAsync(order => order.Id == id);
-        if (order == null) return NotFound(new { message = "Order not Found!" });
-        return Ok(order);
+            var order = await db.Orders.AsNoTracking().FirstOrDefaultAsync(order => order.Id == id);
+            if (order == null) return NotFound(new { message = "Order not Found!" });
+            return Ok(order);
         }
 
         [HttpPost]
@@ -33,17 +33,17 @@ namespace Shop.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<Order>> Post([FromBody] Order body, [FromServices] DataContext db)
         {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-        try
-        {
-            db.Orders.Add(body);
-            await db.SaveChangesAsync();
-            return Ok(body);
-        }
-        catch
-        {
-            return BadRequest(new { message = "Error:while add an Order!" });
-        }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            try
+            {
+                db.Orders.Add(body);
+                await db.SaveChangesAsync();
+                return Ok(body);
+            }
+            catch
+            {
+                return BadRequest(new { message = "Error:while add an Order!" });
+            }
         }
 
         [HttpPut]
@@ -51,22 +51,22 @@ namespace Shop.Controllers
         [Authorize(Roles = "employee")]
         public async Task<ActionResult<Order>> Put(int id, [FromBody] Order body, [FromServices] DataContext db)
         {
-        if (body.Id != id) return NotFound(new { message = "Order not found!" });
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-        try
-        {
-            db.Orders.Entry(body).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return Ok(body);
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            return BadRequest(new { message = "Error: while updating the Order!" });
-        }
-        catch (Exception)
-        {
-            return BadRequest(new { message = "Error: while updating the Order!" });
-        }
+            if (body.Id != id) return NotFound(new { message = "Order not found!" });
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            try
+            {
+                db.Orders.Entry(body).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return Ok(body);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest(new { message = "Error: while updating the Order!" });
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Error: while updating the Order!" });
+            }
         }
 
         [HttpDelete]
@@ -74,21 +74,44 @@ namespace Shop.Controllers
         [Authorize(Roles = "manager")]
         public async Task<ActionResult<Order>> Delete(int id, [FromServices] DataContext db)
         {
-        var order = await db.Orders.FirstOrDefaultAsync(order => order.Id == id);
-        if (order == null)
+            var order = await db.Orders.FirstOrDefaultAsync(order => order.Id == id);
+            if (order == null)
+            {
+                return NotFound(new { message = "order is not found!" });
+            }
+            try
+            {
+                db.Orders.Remove(order);
+                await db.SaveChangesAsync();
+                return Ok(new { message = "order is removed!" });
+            }
+            catch
+            {
+                return BadRequest(new { message = "Error:While removing the order!" });
+            }
+        }
+        [HttpPut]
+        [Route("confirm/{id:int}")]
+        [Authorize(Roles = "employee,manager")]
+        public async Task<IActionResult> Confirm(int id, [FromServices] DataContext db)
         {
-            return NotFound(new { message = "order is not found!" });
+            try
+            {
+                var order = await db.Orders.FindAsync(id);
+                if (order == null)
+                    return NotFound(new { message = "Order not found." });
+
+                order.Status = !order.Status;
+                await db.SaveChangesAsync();
+
+                return Ok(new { message = "Order status toggled successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error updating order status.", error = ex.Message });
+            }
         }
-        try
-        {
-            db.Orders.Remove(order);
-            await db.SaveChangesAsync();
-            return Ok(new { message = "order is removed!" });
-        }
-        catch
-        {
-            return BadRequest(new { message = "Error:While removing the order!" });
-        }
-        }
+
+
     }
 }

@@ -79,6 +79,12 @@ function AppContent() {
                 <AppLayout sider={<YourSider />} content={<UserList />} />
               }
             />
+            <Route
+              path="/Order"
+              element={
+                <AppLayout sider={<YourSider />} content={<Order />} />
+              }
+            />
           </>
         ) : (
           <>
@@ -93,6 +99,7 @@ function AppContent() {
 
 import { useState } from "react";
 import UserList from "./pages/UserList";
+import Order from "./pages/Order";
 
 function YourSider() {
   const navigate = useNavigate();
