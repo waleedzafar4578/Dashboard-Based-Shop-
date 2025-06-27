@@ -1,0 +1,129 @@
+/* USER LIST & CARDS */
+.user-list {
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.user-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+/* ACTION BUTTONS ON CARDS */
+.user-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+.edit-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background-color: #2980b9;
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* MODAL CONTENT */
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* FORM INSIDE MODAL */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* MODAL BUTTONS */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #e53935;
+}

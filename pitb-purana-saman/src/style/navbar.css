@@ -1,0 +1,36 @@
+.navbutton{
+    padding-left: 10%;
+    padding-right: 10%;
+    border-radius: 10px;
+    background-color: bisque;
+    padding: 10%;
+    border: none;
+}
+.navbar {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; 
+  background-color: transparent;
+}
+.navbutton {
+  background-color: #1f781f; 
+  color: white;
+  border: none;
+  border-radius: 0.5rem; 
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.navbutton:hover {
+  background-color: #18a718; 
+  transform: translateY(-2px);
+}
+
+.navbutton:active {
+  background-color: #64d064; 
+  transform: translateY(0);
+}

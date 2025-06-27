@@ -1,0 +1,20 @@
+.App{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  flex: auto;
+  background-color: #CAE8BD;
+}
+.navbar{
+    margin: 1%;
+    width: 60%;
+    display: flex;
+    background-color: #ECFAE5;
+    flex-direction: row;
+    gap: 2%;
+    padding: 1px;
+    border-radius: 15px;
+}
+
