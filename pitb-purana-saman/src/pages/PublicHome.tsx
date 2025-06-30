@@ -175,6 +175,7 @@ These products are maintained to government standards and can serve well in both
             </>
           )}
       <div className="top-section">
+        <h1 style={{color:"#16610E",width:'100%',textAlign:'center'}}>{headerText}</h1>
         <div className="public-home-text">
           {auth?.token ? (
             <>
@@ -197,7 +198,6 @@ These products are maintained to government standards and can serve well in both
             </>
           ) : (
             <>
-              <h1>{headerText}</h1>
               {bodyText.split("\n").map((line, idx) => (
                 <p key={idx}>{line}</p>
               ))}
