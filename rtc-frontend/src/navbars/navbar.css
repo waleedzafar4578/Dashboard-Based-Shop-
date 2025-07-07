@@ -1,0 +1,13 @@
+ul{
+    display: flex;
+    background-color: rgb(224, 224, 224);
+    padding: 20px;
+    min-width: 400px;
+}
+li{
+    list-style: none;
+    margin-left: 20px;
+}
+li:nth-child(1){
+    margin-right: auto;
+}
